@@ -37,6 +37,31 @@ $ ./run.sh cargo check
 ...
 ```
 
+For running blocking commands that do funny stuff to the signal handling
+(like `watchexec` when run inside the docker container) there is another helper 
+script called `./watch.sh` which does some extra work to ensure you can kill
+the command with `SIGTERM` as you'd hope. For example:
+
+```
+$ ./run.sh cargo install watchexec
+...
+
+$ ./watch.sh watchexec cargo test
+    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running target/debug/deps/my_binary-068139cf154b28dd
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+^C
+$
+```
+
+A regrettable side-effect of how `./watch.sh` works is it'll strip any color 
+information out of the command output. Sorry! Hopefully there's a better 
+solution out there for this and we'll find it eventually.
+
 The build in the `dev` image is dynamicly linked and as such, native deps can 
 be installed via `apt-get`.
 

@@ -14,6 +14,8 @@ services:
     # You could launch watchexec to run your program, or tests...
     # As a default, the container will just exit
     command: /bin/true
+    environment:
+        - TERM
 
 volumes:
   cargo-cache:
