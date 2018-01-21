@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  dev:
+    build:
+      context: .
+      # customize this dockerfile as needed
+      dockerfile: dockerfiles/dev/Dockerfile
+    volumes:
+      - .:/code
+      # a data volume backs this directory so you can install whatever 
+      # tools you need and have them be there from run to run.
+      - cargo-cache:/rust/cargo
+    # You could launch watchexec to run your program, or tests...
+    # As a default, the container will just exit
+    command: /bin/true
+
+volumes:
+  cargo-cache:
